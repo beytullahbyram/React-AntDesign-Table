@@ -3,9 +3,11 @@ import {
   EditOutlined,
   DeleteOutlined,
   ExclamationCircleFilled,
+  SearchOutlined,
+  DeleteFilled,
 } from "@ant-design/icons";
 import { useState } from "react";
-import { DataType } from "../components/TableData.d";
+import { DataType, FilterDropdownProps } from "../components/TableData.d";
 
 export const TableCRUD = () => {
   //inputları doldurmak için oluşturduğumuz state
@@ -14,7 +16,7 @@ export const TableCRUD = () => {
   const [isEditing, setIsEditing] = useState(false);
   //modalda ki inputları doldurmak için oluşturduğumu state
   const [isEditingPerson, setIsEditingPerson] = useState<DataType | null>();
-
+  const { Search } = Input;
   const randomId = Math.round(Math.random() * 100);
 
   //#region DATA  COLUMNS
@@ -22,47 +24,103 @@ export const TableCRUD = () => {
     {
       key: "1",
       id: randomId,
-      name: "Name 1",
+      name: "ayşe 1",
       email: "name1@hotmail.com",
       address: "name 1 address",
     },
     {
       key: "2",
       id: randomId + 1,
-      name: "Name 2",
+      name: "ahmet 2",
       email: "2@hotmail.com",
       address: "name 2 address",
     },
     {
       key: "3",
       id: randomId + 2,
-      name: "Name 3",
+      name: "mehmet",
       email: "3@hotmail.com",
       address: "name 3 address",
     },
     {
       key: "4",
       id: randomId + 3,
-      name: "Name 4",
+      name: "veli 4",
       email: "4@hotmail.com",
       address: "name 4 address",
     },
     {
       key: "5",
       id: randomId + 4,
-      name: "Name 5",
+      name: "john 5",
       email: "5@hotmail.com",
       address: "name 5 address",
     },
   ]);
-  const columns = [
+
+  const columns: any = [
     {
       key: "1",
       title: "Id",
       dataIndex: "id",
       sorter: (a: DataType, b: DataType) => a.id - b.id,
     },
-    { key: "2 ", title: "Name", dataIndex: "name" },
+    {
+      key: "2 ",
+      title: "Name",
+      dataIndex: "name",
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
+      filterDropdown: ({
+        setSelectedKeys, //array,  (selectedKeys: React.Key[]) => void;
+        selectedKeys, //inputa yazılan anlık değer
+        confirm, //aramayı başlatan kabul eden fonksiyon
+        clearFilters,
+      }: FilterDropdownProps) => {
+        return (
+          <>
+            {/* <Input
+              autoFocus
+              placeholder="Name searching"
+              value={selectedKeys[0]}
+              onChange={(e: any) => {
+                setSelectedKeys(e.target.value ? [e.target.value] : []);
+              }}
+              onPressEnter={() => confirm()}
+              onBlur={() => confirm()}
+            ></Input> */}
+            <Search
+              autoFocus={true}
+              value={selectedKeys[0]}
+              placeholder="Name searching"
+              onChange={(e: any) => {
+                //inputtaki değer varsa onu geri döndür
+                setSelectedKeys(e.target.value ? [e.target.value] : []);
+                //Hiç bir butona veya tuşa basmadan arama yapmak istiyorsak burada confirm() kullanmalıyız ama onchange mantıgından dolayı
+                //Tek harf ile menü kapanıyor bunun için içindeki paramete kullanılır
+                confirm({ closeDropdown: false });
+              }}
+              //enter tuşu
+              onPressEnter={() => confirm()}
+              //input içine değeri yazdıktan sonra herhangi bir yere tıklandığında arama gerçekleşir
+              onBlur={() => confirm()}
+              //bu secenek input içindeki allowclear ile sildikten sonra tablo eski haline dönmesini saglıyor
+              //yani input içinde bir arama vs. saglıyor
+              onSearch={() => confirm()}
+              enterButton
+              allowClear={{
+                clearIcon: <DeleteFilled />,
+              }}
+            />
+          </>
+        );
+      },
+      onFilter: (value: string, record: DataType) => {
+        //tablodaki değer inputtakini içeriyorsa geri döndür
+        return record.name.toLowerCase().includes(value.toLowerCase());
+      },
+    },
     { key: "3", title: "Email", dataIndex: "email" },
     { key: "4", title: "Address", dataIndex: "address" },
     {

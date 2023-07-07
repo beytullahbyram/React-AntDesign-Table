@@ -84,7 +84,7 @@ button:focus-visible {
 
 
 .headerLink{
-  position:  fixed;
+  position:  absolute;
   right:70%;
   top: 0%;
   border: 3px solid red; 
@@ -98,4 +98,8 @@ button:focus-visible {
 
 .ant-table-tbody > tr > td{
   padding: 8px 40px !important;
+}
+.ant-table-filter-dropdown {
+  position: relative !important;
+  bottom: 60px !important;
 }
