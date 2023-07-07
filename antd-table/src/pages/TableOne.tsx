@@ -82,12 +82,7 @@ const App: React.FC = () => {
   ) => {
     console.log("save");
   };
-  // const onClear = (
-  //   e:
-  //     | React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  //     | React.MouseEvent<HTMLButtonElement, MouseEvent>
-  // ) => {};
-
+  //----
   return (
     <>
       <Row gutter={50}>
