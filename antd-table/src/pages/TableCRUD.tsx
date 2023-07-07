@@ -8,8 +8,11 @@ import { useState } from "react";
 import { DataType } from "../components/TableData.d";
 
 export const TableCRUD = () => {
+  //inputları doldurmak için oluşturduğumuz state
   const [inputData, setInputData] = useState({} as DataType | any | null);
+  //modalın açılıp açılmayacağını kontrol ettiğimiz state
   const [isEditing, setIsEditing] = useState(false);
+  //modalda ki inputları doldurmak için oluşturduğumu state
   const [isEditingPerson, setIsEditingPerson] = useState<DataType | null>();
 
   const randomId = Math.round(Math.random() * 100);
@@ -85,6 +88,8 @@ export const TableCRUD = () => {
     },
   ];
   //#endregion
+
+  //#region Input change
   const onAddingInput = (event: any) => {
     const { name, value } = event.target;
     setInputData((prev: DataType) => ({
@@ -93,8 +98,11 @@ export const TableCRUD = () => {
     }));
     console.log(inputData);
   };
+  //#endregion
 
-  const onAddTable = (event: any) => {
+  //#region Button
+  //inputtaki bilgilerle tabloya yeni veri ekler
+  const onAddTable = () => {
     setDataSrc((prev) => {
       inputData.id = randomId;
       inputData.key = randomId.toString();
@@ -102,7 +110,7 @@ export const TableCRUD = () => {
     });
     setInputData(null);
   };
-
+  //tabloya random veri ekler
   const onAdd = () => {
     const newPerson: DataType = {
       key: randomId,
@@ -115,7 +123,8 @@ export const TableCRUD = () => {
       return [...prev, newPerson];
     });
   };
-
+  //#endregion
+  //#region Rowdaki düzenle ve sil butonları
   const onDeletePerson = (record: DataType) => {
     Modal.confirm({
       title: "Are u sure, u want to delete this person",
@@ -131,15 +140,18 @@ export const TableCRUD = () => {
       },
     });
   };
-
+  //Modal açılır ve inputlar seçilen data ile dolar
   const onEditPerson = (record: DataType) => {
     setIsEditing(true);
     setIsEditingPerson({ ...record });
   };
+  //#endregion
+  //modaldaki inputu temizler
   const resetEditing = () => {
     setIsEditing(false);
     setIsEditingPerson(null);
   };
+  //Tabloda row tıklandığında verileri inputa getirir
   function InputChange(record: any) {
     setInputData(record);
   }
@@ -188,7 +200,7 @@ export const TableCRUD = () => {
             dataSource={dataSrc}
             onRow={(record) => {
               return {
-                onClick: (event) => {
+                onClick: () => {
                   InputChange(record);
                 },
               };
