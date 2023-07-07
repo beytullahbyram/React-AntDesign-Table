@@ -140,6 +140,9 @@ export const TableCRUD = () => {
     setIsEditing(false);
     setIsEditingPerson(null);
   };
+  function InputChange(record: any) {
+    setInputData(record);
+  }
   return (
     <>
       <Space
@@ -180,7 +183,17 @@ export const TableCRUD = () => {
           </Space>
         </Col>
         <Col xs={2} sm={4} md={6} lg={8} xl={19}>
-          <Table columns={columns} dataSource={dataSrc}></Table>
+          <Table
+            columns={columns}
+            dataSource={dataSrc}
+            onRow={(record) => {
+              return {
+                onClick: (event) => {
+                  InputChange(record);
+                },
+              };
+            }}
+          ></Table>
           <Modal
             title="Edit person"
             okText="Save"
