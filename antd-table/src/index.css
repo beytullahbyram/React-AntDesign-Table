@@ -24,9 +24,9 @@ a:hover {
 }
 
 body {
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh;
 }
 
 h1 {
@@ -82,12 +82,18 @@ button:focus-visible {
 }
 
 
-
 .headerLink{
-  position:  absolute;
-  right:70%;
-  top: 0%;
-  border: 3px solid red; 
+  position: absolute;
+  top: 2%;
+  border: 3px solid rgb(0, 0, 0);
+  background-color: rgb(244, 216, 180);
+}
+.headerLink{
+  left: 30%;
+  /* position: fixed; */
+  top: 2%;
+  border: 3px solid rgb(0, 0, 0);
+  background-color: rgb(244, 216, 180);
 }
 .headerlinks-item{
   padding: 0px 15px ;
@@ -103,3 +109,37 @@ button:focus-visible {
   position: relative !important;
   bottom: 60px !important;
 }
+
+.ant-btn-icon-only{
+position: absolute;
+left: 22%;
+}
+
+.ant-input{
+  border-color: rgba(30, 110, 230, 0.25) !important;
+  border-collapse: collapse; 
+}
+.ant-input:hover {
+  transform: translateY(-4px);
+} 
+/* .ant-input-affix-wrapper ant-input-password css-dev-only-do-not-override-14wwjjs */
+.ant-input-affix-wrapper{
+  border-color: rgba(129, 158, 202, 0.25) !important;
+
+}
+.ant-input-affix-wrapper:hover{
+  transform: translateY(-4px);
+  border-color: rgba(129, 158, 202, 0.25) !important;
+}
+.ant-picker{
+  width: 100% !important;
+}
+.ant-select{
+  width: 100% !important;
+}
+
+
+  /* .ant-input {
+    box-shadow: 3px 3px 6px 0px #7aa1c4 inset, 
+    -3px -3px 6px 1px rgba(214, 33, 33, 0.5) inset !important;
+  } */

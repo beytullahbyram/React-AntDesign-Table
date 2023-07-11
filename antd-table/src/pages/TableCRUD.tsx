@@ -154,19 +154,22 @@ export const TableCRUD = () => {
       ...prev,
       [name]: value,
     }));
-    console.log(inputData);
   };
   //#endregion
 
   //#region Button
   //inputtaki bilgilerle tabloya yeni veri ekler
   const onAddTable = () => {
-    setDataSrc((prev) => {
-      inputData.id = randomId;
-      inputData.key = randomId.toString();
-      return [...prev, inputData];
-    });
-    setInputData(null);
+    inputData.name.length > 0 &&
+    inputData.address.length > 0 &&
+    inputData.email.length > 0
+      ? setDataSrc((prev) => {
+          inputData.id = randomId;
+          inputData.key = randomId.toString();
+          setInputData(null);
+          return [...prev, inputData];
+        })
+      : console.log("bos");
   };
   //tabloya random veri ekler
   const onAdd = () => {
@@ -193,6 +196,7 @@ export const TableCRUD = () => {
       },
       onOk: () => {
         setDataSrc((prev) => {
+          setInputData(null);
           return prev.filter((person) => person.id != record.id);
         });
       },
@@ -201,8 +205,10 @@ export const TableCRUD = () => {
   //Modal açılır ve inputlar seçilen data ile dolar
   const onEditPerson = (record: DataType) => {
     setIsEditing(true);
+    resetEditing;
     setIsEditingPerson({ ...record });
   };
+
   //#endregion
   //modaldaki inputu temizler
   const resetEditing = () => {
@@ -213,6 +219,10 @@ export const TableCRUD = () => {
   function InputChange(record: any) {
     setInputData(record);
   }
+  function InputClear() {
+    setInputData(null);
+  }
+
   return (
     <>
       <Space
@@ -224,6 +234,9 @@ export const TableCRUD = () => {
         </Button>
         <Button type="primary" onClick={onAddTable}>
           Input person add
+        </Button>
+        <Button type="primary" onClick={InputClear}>
+          Clear
         </Button>
       </Space>
       <Row gutter={30}>

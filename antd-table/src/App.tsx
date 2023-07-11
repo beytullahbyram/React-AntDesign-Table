@@ -5,6 +5,7 @@ import { Header } from "./components/Header";
 import TableOne from "./pages/TableOne";
 import { TableTwo } from "./pages/TableTwo";
 import { TableCRUD } from "./pages/TableCRUD";
+import { AppForm } from "./pages/AppForm";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/TableOne" element={<TableOne />} />
         <Route path="/TableTwo" element={<TableTwo />} />
         <Route path="/TableCRUD" element={<TableCRUD />} />
+        <Route path="/Form" element={<AppForm />} />
       </Routes>
     </>
   );

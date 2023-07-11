@@ -17,6 +17,9 @@ export const Header = () => {
         <Link className="headerlinks-item" to={"/TableCRUD"}>
           Table CRUD
         </Link>
+        <Link className="headerlinks-item" to={"/Form"}>
+          Form
+        </Link>
       </header>
     </>
   );
