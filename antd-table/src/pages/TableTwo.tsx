@@ -118,7 +118,7 @@ export const TableTwo = () => {
     <>
       {alreadySelectedRows}
       <Table
-        style={{ marginTop: "20px" }}
+        style={{ marginTop: "5%" }}
         columns={columns}
         dataSource={dataSrc}
         rowSelection={rowSelection}

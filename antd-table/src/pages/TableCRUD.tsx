@@ -1,10 +1,22 @@
-import { Button, Col, Input, Modal, Row, Space, Table } from "antd";
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  Modal,
+  Row,
+  Space,
+  Table,
+  Tooltip,
+} from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
   ExclamationCircleFilled,
   SearchOutlined,
   DeleteFilled,
+  CreditCardOutlined,
+  LikeOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
 import { DataType, FilterDropdownProps } from "../components/TableData.d";
@@ -16,6 +28,8 @@ export const TableCRUD = () => {
   const [isEditing, setIsEditing] = useState(false);
   //modalda ki inputları doldurmak için oluşturduğumu state
   const [isEditingPerson, setIsEditingPerson] = useState<DataType | null>();
+  const [selectRowInputChange, setSelectRowInputChange] = useState(null);
+
   const { Search } = Input;
   const randomId = Math.round(Math.random() * 100);
 
@@ -121,25 +135,93 @@ export const TableCRUD = () => {
         return record.name.toLowerCase().includes(value.toLowerCase());
       },
     },
-    { key: "3", title: "Email", dataIndex: "email" },
-    { key: "4", title: "Address", dataIndex: "address" },
+    {
+      key: "3",
+      title: "Email",
+      dataIndex: "email",
+      render: (text: string, record: DataType) => {
+        return (
+          <>
+            <Form.Item>
+              <Input />
+            </Form.Item>
+          </>
+        );
+      },
+    },
+    {
+      key: "4",
+      title: "Address",
+      dataIndex: "address",
+      render: (text: string, record: DataType) => {
+        console.log(selectRowInputChange);
+        if (selectRowInputChange.id === record.id) {
+          <Form.Item>
+            <Input value={record.address} />
+          </Form.Item>;
+        }
+        // return (
+        //   <>
+        //     {selectRowInputChange.key === record.key ? (
+        //       <Form.Item>
+        //         <Input value={record.address} />
+        //       </Form.Item>
+        //     ) : null}
+        //   </>
+        // );
+      },
+    },
     {
       key: "5",
       title: "Actions",
       render: (record: DataType) => {
         return (
           <>
-            <EditOutlined
-              onClick={() => {
-                onEditPerson(record);
-              }}
-            />
-            <DeleteOutlined
-              onClick={() => {
-                onDeletePerson(record);
-              }}
-              style={{ color: "red" }}
-            />
+            <Space.Compact block direction="horizontal">
+              <Tooltip>
+                <Button
+                  style={{
+                    margin: "0%",
+                    paddingLeft: "10%",
+                    paddingRight: "10%",
+                  }}
+                >
+                  <EditOutlined
+                    onClick={() => {
+                      onEditPerson(record);
+                    }}
+                  />
+                </Button>
+              </Tooltip>
+              <Tooltip>
+                <Button
+                  style={{
+                    margin: "0%",
+                    paddingLeft: "10%",
+                    paddingRight: "10%",
+                  }}
+                >
+                  <DeleteOutlined
+                    onClick={() => {
+                      onDeletePerson(record);
+                    }}
+                    style={{ color: "red" }}
+                  />
+                </Button>
+              </Tooltip>
+              <Tooltip>
+                <Button
+                  style={{
+                    margin: "0%",
+                    paddingLeft: "10%",
+                    paddingRight: "10%",
+                  }}
+                  onClick={() => setSelectRowInputChange(record.id)}
+                >
+                  <CreditCardOutlined />
+                </Button>
+              </Tooltip>
+            </Space.Compact>
           </>
         );
       },
@@ -218,6 +300,7 @@ export const TableCRUD = () => {
   //Tabloda row tıklandığında verileri inputa getirir
   function InputChange(record: any) {
     setInputData(record);
+    setSelectRowInputChange(record);
   }
   function InputClear() {
     setInputData(null);
@@ -225,101 +308,110 @@ export const TableCRUD = () => {
 
   return (
     <>
-      <Space
-        size={20}
-        style={{ margin: "2% 0% 1% 0%", position: "relative", right: "12%" }}
-      >
-        <Button type="primary" onClick={onAdd}>
-          Random person add
-        </Button>
-        <Button type="primary" onClick={onAddTable}>
-          Input person add
-        </Button>
-        <Button type="primary" onClick={InputClear}>
-          Clear
-        </Button>
-      </Space>
-      <Row gutter={30}>
-        <Col xs={2} sm={4} md={6} lg={8} xl={5}>
-          <Space direction="vertical" size="middle" style={{ display: "flex" }}>
-            <Input
-              key="name"
-              placeholder="Name"
-              name="name"
-              value={inputData?.name}
-              onChange={onAddingInput}
-            />
-            <Input
-              key="email"
-              placeholder="Email"
-              name="email"
-              value={inputData?.email}
-              onChange={onAddingInput}
-            />
-            <Input
-              key="address"
-              placeholder="Address"
-              name="address"
-              value={inputData?.address}
-              onChange={onAddingInput}
-            />
-          </Space>
-        </Col>
-        <Col xs={2} sm={4} md={6} lg={8} xl={19}>
-          <Table
-            columns={columns}
-            dataSource={dataSrc}
-            onRow={(record) => {
-              return {
-                onClick: () => {
-                  InputChange(record);
-                },
-              };
-            }}
-          ></Table>
-          <Modal
-            title="Edit person"
-            okText="Save"
-            visible={isEditing}
-            onCancel={() => resetEditing()}
-            onOk={() => {
-              setDataSrc((prev: any) => {
-                return prev.map((person: any) => {
-                  return person.id === isEditingPerson?.id
-                    ? isEditingPerson
-                    : person;
-                });
-              });
-              resetEditing();
-            }}
-          >
-            <Input
-              value={isEditingPerson?.name}
-              onChange={(e) => {
-                setIsEditingPerson((prev: any) => {
-                  return { ...prev, name: e.target.value };
-                });
+      <div style={{ marginTop: "3%", marginLeft: "3%", marginRight: "3%" }}>
+        <Space
+          size={20}
+          style={{ margin: "2% 0% 1% 0%", position: "relative", right: "12%" }}
+        >
+          <Button type="primary" onClick={onAdd}>
+            Random person add
+          </Button>
+          <Button type="primary" onClick={onAddTable}>
+            Input person add
+          </Button>
+          <Button type="primary" onClick={InputClear}>
+            Clear
+          </Button>
+        </Space>
+        <Row gutter={40}>
+          <Col xs={2} sm={4} md={6} lg={8} xl={5}>
+            <Space
+              direction="vertical"
+              size="middle"
+              style={{ display: "flex" }}
+            >
+              <Input
+                key="name"
+                placeholder="Name"
+                name="name"
+                value={inputData?.name}
+                onChange={onAddingInput}
+              />
+              <Input
+                key="email"
+                placeholder="Email"
+                name="email"
+                value={inputData?.email}
+                onChange={onAddingInput}
+              />
+              <Input
+                key="address"
+                placeholder="Address"
+                name="address"
+                value={inputData?.address}
+                onChange={onAddingInput}
+              />
+            </Space>
+          </Col>
+          <Col xs={2} sm={4} md={6} lg={8} xl={19}>
+            <Table
+              rowClassName={(record, index) =>
+                index % 2 === 0 ? "table-row-light" : "table-row-dark"
+              }
+              columns={columns}
+              dataSource={dataSrc}
+              onRow={(record) => {
+                return {
+                  onClick: () => {
+                    InputChange(record);
+                  },
+                };
               }}
-            ></Input>
-            <Input
-              value={isEditingPerson?.address}
-              onChange={(e) => {
-                setIsEditingPerson((prev: any) => {
-                  return { ...prev, address: e.target.value };
+            ></Table>
+            <Modal
+              title="Edit person"
+              okText="Save"
+              visible={isEditing}
+              onCancel={() => resetEditing()}
+              onOk={() => {
+                setDataSrc((prev: any) => {
+                  return prev.map((person: any) => {
+                    return person.id === isEditingPerson?.id
+                      ? isEditingPerson
+                      : person;
+                  });
                 });
+                resetEditing();
               }}
-            ></Input>
-            <Input
-              value={isEditingPerson?.email}
-              onChange={(e) => {
-                setIsEditingPerson((prev: any) => {
-                  return { ...prev, email: e.target.value };
-                });
-              }}
-            ></Input>
-          </Modal>
-        </Col>
-      </Row>
+            >
+              <Input
+                value={isEditingPerson?.name}
+                onChange={(e) => {
+                  setIsEditingPerson((prev: any) => {
+                    return { ...prev, name: e.target.value };
+                  });
+                }}
+              ></Input>
+              <Input
+                value={isEditingPerson?.address}
+                onChange={(e) => {
+                  setIsEditingPerson((prev: any) => {
+                    return { ...prev, address: e.target.value };
+                  });
+                }}
+              ></Input>
+              <Input
+                value={isEditingPerson?.email}
+                onChange={(e) => {
+                  setIsEditingPerson((prev: any) => {
+                    return { ...prev, email: e.target.value };
+                  });
+                }}
+              ></Input>
+            </Modal>
+          </Col>
+        </Row>
+      </div>
     </>
   );
 };

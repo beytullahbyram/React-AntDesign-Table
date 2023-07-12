@@ -85,7 +85,7 @@ const App: React.FC = () => {
   //----
   return (
     <>
-      <Row gutter={50}>
+      <Row gutter={50} style={{ marginTop: "3%" }}>
         <Col span={18} push={6} style={{ backgroundColor: "darkkhaki" }}>
           <Row>
             <Button
@@ -108,7 +108,6 @@ const App: React.FC = () => {
             </Button>
           </Row>
           <Table
-            style={{ paddingTop: "10px" }}
             onRow={(record) => {
               return {
                 onClick: (event: React.MouseEvent<any, MouseEvent>) => {

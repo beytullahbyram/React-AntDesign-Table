@@ -82,15 +82,12 @@ button:focus-visible {
 }
 
 
+
 .headerLink{
-  position: absolute;
-  top: 2%;
-  border: 3px solid rgb(0, 0, 0);
-  background-color: rgb(244, 216, 180);
-}
-.headerLink{
+  margin-bottom: 5%;
+  z-index: 6;
   left: 30%;
-  /* position: fixed; */
+  position: fixed;
   top: 2%;
   border: 3px solid rgb(0, 0, 0);
   background-color: rgb(244, 216, 180);
@@ -143,3 +140,37 @@ left: 22%;
     box-shadow: 3px 3px 6px 0px #7aa1c4 inset, 
     -3px -3px 6px 1px rgba(214, 33, 33, 0.5) inset !important;
   } */
+
+.ant-table-cell{
+  /* background-color:red; */
+
+}
+.ant-form-item{
+  background-color: #717f88;
+  border-radius: 19px;
+  margin-bottom: 12px;
+
+}
+#addressFormItem{
+  background-color: aquamarine;
+}
+.ant-table-tbody>tr>td{
+  padding: 8px 8px !important;
+}
+
+.ant-table-cell{
+  width: 5% !important;
+  height: 16% !important;
+  /* background-color: rgb(229, 255, 0); */
+}
+
+.table-row-light {
+  background-color: #88c1c5 !important;
+}
+.table-row-dark {
+  background-color: #d1f4fa !important;
+}
+
+.ant-space-compact button{
+  background-color: rgb(166, 226, 208) !important;
+}
