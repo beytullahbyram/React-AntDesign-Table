@@ -85,7 +85,7 @@ const App: React.FC = () => {
   //----
   return (
     <>
-      <Row gutter={50} style={{ marginTop: "3%" }}>
+      <Row gutter={50} style={{ marginTop: "6%" }}>
         <Col span={18} push={6} style={{ backgroundColor: "darkkhaki" }}>
           <Row>
             <Button
@@ -167,9 +167,7 @@ const App: React.FC = () => {
           />
         </Col>
       </Row>
-
       <Divider orientation="right">Horizontal</Divider>
-
       <Row gutter={30} justify="space-around">
         <Col className="gutter-row" span={6}>
           <div style={style}>col-6</div>
@@ -184,7 +182,6 @@ const App: React.FC = () => {
           <div style={style}>col-6</div>
         </Col>
       </Row>
-
       <Divider orientation="left">Responsive</Divider>
       <Row>
         <Col
@@ -224,7 +221,7 @@ const App: React.FC = () => {
           4 col-order-responsive
         </Col>
       </Row>
-
+      responsive
       <Row style={style}>
         {/*xs, sm, md, lg, xl içindeki sayılar  sütunu ekranın o anki değerine göre(sm,md,...) büyük veya küçük gösterecek  */}
         {/* xs	screen < 576px */}

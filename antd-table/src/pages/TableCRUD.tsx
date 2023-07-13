@@ -1,25 +1,15 @@
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  Modal,
-  Row,
-  Space,
-  Table,
-  Tooltip,
-} from "antd";
+import { Button, Col, Input, Modal, Row, Space, Table, Tooltip } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
   ExclamationCircleFilled,
   SearchOutlined,
   DeleteFilled,
-  CreditCardOutlined,
-  LikeOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
 import { DataType, FilterDropdownProps } from "../components/TableData.d";
+import { EditableRows } from "../components/EditableRows";
+import { EditableRows2 } from "../components/EditableRows2";
 
 export const TableCRUD = () => {
   //inputları doldurmak için oluşturduğumuz state
@@ -28,7 +18,6 @@ export const TableCRUD = () => {
   const [isEditing, setIsEditing] = useState(false);
   //modalda ki inputları doldurmak için oluşturduğumu state
   const [isEditingPerson, setIsEditingPerson] = useState<DataType | null>();
-  const [selectRowInputChange, setSelectRowInputChange] = useState(null);
 
   const { Search } = Input;
   const randomId = Math.round(Math.random() * 100);
@@ -139,37 +128,21 @@ export const TableCRUD = () => {
       key: "3",
       title: "Email",
       dataIndex: "email",
-      render: (text: string, record: DataType) => {
-        return (
-          <>
-            <Form.Item>
-              <Input />
-            </Form.Item>
-          </>
-        );
-      },
     },
     {
       key: "4",
       title: "Address",
       dataIndex: "address",
-      render: (text: string, record: DataType) => {
-        console.log(selectRowInputChange);
-        if (selectRowInputChange.id === record.id) {
-          <Form.Item>
-            <Input value={record.address} />
-          </Form.Item>;
-        }
-        // return (
-        //   <>
-        //     {selectRowInputChange.key === record.key ? (
-        //       <Form.Item>
-        //         <Input value={record.address} />
-        //       </Form.Item>
-        //     ) : null}
-        //   </>
-        // );
-      },
+      // render: (text: string, record: DataType) => {
+      //   if (selectRowInputChange?.key === record.key) {
+      //     return (
+      //       <Form.Item>
+      //         <Input value={record.address}></Input>
+      //       </Form.Item>
+      //     );
+      //   }
+      //   return text;
+      // },
     },
     {
       key: "5",
@@ -182,43 +155,28 @@ export const TableCRUD = () => {
                 <Button
                   style={{
                     margin: "0%",
-                    paddingLeft: "10%",
-                    paddingRight: "10%",
+                    paddingLeft: "7%",
+                    paddingRight: "7%",
+                  }}
+                  onClick={() => {
+                    onEditPerson(record);
                   }}
                 >
-                  <EditOutlined
-                    onClick={() => {
-                      onEditPerson(record);
-                    }}
-                  />
+                  <EditOutlined />
                 </Button>
               </Tooltip>
               <Tooltip>
                 <Button
                   style={{
                     margin: "0%",
-                    paddingLeft: "10%",
-                    paddingRight: "10%",
+                    paddingLeft: "7%",
+                    paddingRight: "7%",
+                  }}
+                  onClick={() => {
+                    onDeletePerson(record);
                   }}
                 >
-                  <DeleteOutlined
-                    onClick={() => {
-                      onDeletePerson(record);
-                    }}
-                    style={{ color: "red" }}
-                  />
-                </Button>
-              </Tooltip>
-              <Tooltip>
-                <Button
-                  style={{
-                    margin: "0%",
-                    paddingLeft: "10%",
-                    paddingRight: "10%",
-                  }}
-                  onClick={() => setSelectRowInputChange(record.id)}
-                >
-                  <CreditCardOutlined />
+                  <DeleteOutlined style={{ color: "red" }} />
                 </Button>
               </Tooltip>
             </Space.Compact>
@@ -300,7 +258,6 @@ export const TableCRUD = () => {
   //Tabloda row tıklandığında verileri inputa getirir
   function InputChange(record: any) {
     setInputData(record);
-    setSelectRowInputChange(record);
   }
   function InputClear() {
     setInputData(null);
@@ -411,6 +368,12 @@ export const TableCRUD = () => {
             </Modal>
           </Col>
         </Row>
+      </div>
+      <div style={{ marginTop: "3%", marginLeft: "3%", marginRight: "3%" }}>
+        <EditableRows />
+      </div>
+      <div style={{ marginTop: "3%", marginLeft: "3%", marginRight: "3%" }}>
+        <EditableRows2 />
       </div>
     </>
   );

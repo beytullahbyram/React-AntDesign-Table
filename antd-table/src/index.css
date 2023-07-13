@@ -85,7 +85,6 @@ button:focus-visible {
 
 .headerLink{
   margin-bottom: 5%;
-  z-index: 6;
   left: 30%;
   position: fixed;
   top: 2%;
